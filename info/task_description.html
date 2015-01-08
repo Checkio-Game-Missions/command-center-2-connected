@@ -14,34 +14,33 @@
 </style>
 
 <p>
-    For the mission
-    <a href="http://www.checkio.org/mission/find-friends/share/3061fec1b35588e4bae8ad69db073aab/">
-        "How to find friends"
-    </a>, it’s nice to have access to a specially made data structure. In this mission we will
-    realize a data structure which we will use to store and work with a friend network.
+    For cooperative work we should learn operate with connected elements as network nodes or circuit elements.
+    In this mission we will realize a data structure
+    which we will use to store and work with a connected elements.
+    We will use symbolic representation or names of elements (it can be any string).
 
 </p>
 
 <p>
-    The class "Friends" should contains names and the connections between them. Names are
-    represented as strings and are case sensitive. Connections are undirected, so if "sophia" is
-    connected with "nikola", then it's also correct in reverse.
+    The class "Connected" should contains names and the connections between them. Names are
+    represented as strings and are case sensitive. Connections are undirected, so if "farm" is
+    connected with "store", then it's also correct in reverse.
 
 </p>
 
 <p>
-    <em>class</em> <strong>Friends</strong><em>(connections)</em>
+    <em>class</em> <strong>Connected</strong><em>(connections)</em>
 </p>
 <p class="indent">
-    Returns a new Friends instance. <em>"connections"</em> is an iterable of sets with two elements
+    Returns a new Connected instance. <em>"connections"</em> is an iterable of sets with two elements
     in each. Each connection contains two names as strings. Connections can be repeated in the
     initial data, but inside it store once. Each connection has only two states - existing or not.
 
 </p>
 
 <pre class="example">
->>> Friends(({"a", "b"}, {"b", "c"}, {"c", "a"}, {"a", "c"}))
->>> Friends([{"1", "2"}, {"3", "1"}])
+>>> Connected(({"a", "b"}, {"b", "c"}, {"c", "a"}, {"a", "c"}))
+>>> Connected([{"1", "2"}, {"3", "1"}])
 </pre>
 <br>
 
@@ -55,10 +54,10 @@
     Returns False if this connection exists already.
 </p>
 <pre class="example">
->>> f = Friends([{"1", "2"}, {"3", "1"}])
->>> f.add({"1", "3"})
+>>> c = Connected([{"1", "2"}, {"3", "1"}])
+>>> c.add({"1", "3"})
 False
->>> f.add({"4", "5"})
+>>> c.add({"4", "5"})
 True
 </pre>
 <br>
@@ -73,10 +72,10 @@ True
     Returns False if this connection is not in the instance.
 </p>
 <pre class="example">
->>> f = Friends([{"1", "2"}, {"3", "1"}])
->>> f.remove({"1", "3"})
+>>> c = Connected([{"1", "2"}, {"3", "1"}])
+>>> c.remove({"1", "3"})
 True
->>> f.remove({"4", "5"})
+>>> c.remove({"4", "5"})
 False
 </pre>
 <br>
@@ -87,12 +86,12 @@ False
     Returns a set of names. The set contains only names which is connected with somebody.
 </p>
 <pre class="example">
->>> f = Friends(({"a", "b"}, {"b", "c"}, {"c", "d"}))
->>> f.names()
+>>> c = Connected(({"a", "b"}, {"b", "c"}, {"c", "d"}))
+>>> c.names()
 {"a", "b", "c", "d"}
->>> f.remove({"d", "c"})
+>>> c.remove({"d", "c"})
 True
->>> f.names()
+>>> c.names()
 {"a", "b", "c"}
 </pre>
 <br>
@@ -104,18 +103,18 @@ True
     If "name" is not exists in the instance, then return an empty set.
 </p>
 <pre class="example">
->>> f = Friends(({"a", "b"}, {"b", "c"}, {"c", "a"}))
->>> f.connected("a")
+>>> c = Connected(({"a", "b"}, {"b", "c"}, {"c", "a"}))
+>>> c.connected("a")
 {"b", "c"}
->>> f.connected("d")
+>>> c.connected("d")
 set()
->>> f.remove({"c", "a"})
+>>> c.remove({"c", "a"})
 True
->>> f.connected("c")
+>>> c.connected("c")
 {"b"}
->>> f.remove({"c", "b"})
+>>> c.remove({"c", "b"})
 True
->>> f.connected("c")
+>>> c.connected("c")
 set()
 </pre>
 <br>
