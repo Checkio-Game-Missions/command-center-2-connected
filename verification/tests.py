@@ -1,8 +1,8 @@
 init_code = """
-if not "Friends" in USER_GLOBAL:
-    raise NotImplementedError("Where is 'Friends'?")
+if not "Connected" in USER_GLOBAL:
+    raise NotImplementedError("Where is 'Connected'?")
 
-Friends = USER_GLOBAL['Friends']
+Connected = USER_GLOBAL['Connected']
 """
 
 PASS_CODE = """
@@ -22,103 +22,103 @@ def prepare_test(middle_code, test_code, show_code, show_answer):
 
 TESTS = {
     "1. Init": [
-        prepare_test('Friends(({"a", "b"}, {"b", "c"}, {"c", "a"}, {"a", "c"}))\n',
+        prepare_test('Connected(({"a", "b"}, {"b", "c"}, {"c", "a"}, {"a", "c"}))\n',
                      PASS_CODE, None, None),
-        prepare_test('Friends([{"1", "2"}, {"3", "1"}])\n', PASS_CODE, None, None),
+        prepare_test('Connected([{"1", "2"}, {"3", "1"}])\n', PASS_CODE, None, None),
     ],
     "2. Add": [
-        prepare_test('f = Friends([{"1", "2"}, {"3", "1"}])\n'
-                     'add_result = f.add({"2", "4"})\n',
+        prepare_test('con = Connected([{"1", "2"}, {"3", "1"}])\n'
+                     'add_result = con.add({"2", "4"})\n',
                      "RET['code_result'] = add_result is True, str(add_result)",
-                     'f = Friends([{"1", "2"}, {"3", "1"}])\n'
-                     'f.add({"2", "4"})',
+                     'con = Connected([{"1", "2"}, {"3", "1"}])\n'
+                     'con.add({"2", "4"})',
                      "True"
         ),
-        prepare_test('f = Friends([{"And", "Or"}, {"For", "And"}])\n'
-                     'add_result = f.add({"It", "Am"})\n',
+        prepare_test('con = Connected([{"And", "Or"}, {"For", "And"}])\n'
+                     'add_result = con.add({"It", "Am"})\n',
                      "RET['code_result'] = add_result is True, str(add_result)",
-                     'f = Friends([{"And", "Or"}, {"For", "And"}])\n'
-                     'f.add({"It", "Am"})\n',
+                     'con = Connected([{"And", "Or"}, {"For", "And"}])\n'
+                     'con.add({"It", "Am"})\n',
                      "True"),
-        prepare_test('f = Friends([{"And", "Or"}, {"For", "And"}])\n'
-                     'add_result = f.add({"Or", "And"})\n',
+        prepare_test('con = Connected([{"And", "Or"}, {"For", "And"}])\n'
+                     'add_result = con.add({"Or", "And"})\n',
                      "RET['code_result'] = add_result is False, str(add_result)",
-                     'f = Friends([{"And", "Or"}, {"For", "And"}])\n'
-                     'f.add({"Or", "And"})\n',
+                     'con = Connected([{"And", "Or"}, {"For", "And"}])\n'
+                     'con.add({"Or", "And"})\n',
                      "True")
     ],
     "3. Remove": [
-        prepare_test('f = Friends([{"1", "2"}, {"3", "1"}])\n'
-                     'remove_result = f.remove({"2", "4"})\n',
+        prepare_test('con = Connected([{"1", "2"}, {"3", "1"}])\n'
+                     'remove_result = con.remove({"2", "4"})\n',
                      "RET['code_result'] = remove_result is False, str(remove_result)",
-                     'f = Friends([{"1", "2"}, {"3", "1"}])\n'
-                     'f.remove({"2", "4"})',
+                     'con = Connected([{"1", "2"}, {"3", "1"}])\n'
+                     'con.remove({"2", "4"})',
                      "False"),
-        prepare_test('f = Friends([{"1", "2"}, {"3", "1"}])\n'
-                     'remove_result = f.remove({"11", "12"})\n',
+        prepare_test('con = Connected([{"1", "2"}, {"3", "1"}])\n'
+                     'remove_result = con.remove({"11", "12"})\n',
                      "RET['code_result'] = remove_result is False, str(remove_result)",
-                     'f = Friends([{"1", "2"}, {"3", "1"}])\n'
-                     'f.remove({"11", "12"})',
+                     'con = Connected([{"1", "2"}, {"3", "1"}])\n'
+                     'con.remove({"11", "12"})',
                      "False"),
 
-        prepare_test('f = Friends([{"And", "Or"}, {"For", "And"}])\n'
-                     'remove_result = f.remove({"And", "Or"})\n',
+        prepare_test('con = Connected([{"And", "Or"}, {"For", "And"}])\n'
+                     'remove_result = con.remove({"And", "Or"})\n',
                      "RET['code_result'] = remove_result is True, str(remove_result)",
-                     'f = Friends([{"And", "Or"}, {"For", "And"}])\n'
-                     'f.remove({"And", "Or"})\n',
+                     'con = Connected([{"And", "Or"}, {"For", "And"}])\n'
+                     'con.remove({"And", "Or"})\n',
                      "True"),
     ],
     "4. Names": [
         prepare_test(
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
-            'n = f.names()\n',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
+            'n = con.names()\n',
             'RET["code_result"] = (n == {"nikola", "sophia", "robot", "pilot", "stephen"}, str(n))',
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot}))\n'
-            'f.names()',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot}))\n'
+            'con.names()',
             '{"nikola", "sophia", "robot", "pilot", "stephen"}'),
         prepare_test(
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
-            'f.remove({"stephen", "robot"})\n'
-            'n = f.names()\n',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
+            'con.remove({"stephen", "robot"})\n'
+            'n = con.names()\n',
             'RET["code_result"] = (n == {"nikola", "sophia", "pilot"}, str(n))',
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot}))\n'
-            'f.remove({"stephen", "robot"})\n'
-            'f.names()',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot}))\n'
+            'con.remove({"stephen", "robot"})\n'
+            'con.names()',
             '{"nikola", "sophia", "pilot"}'),
 
     ],
     "5. Connected": [
         prepare_test(
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
-            'n = f.connected("nikola")\n',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
+            'n = con.connected("nikola")\n',
             'RET["code_result"] = (n == {"sophia"}, str(n))',
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
-            'f.connected("nikola")',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
+            'con.connected("nikola")',
             '{"sophia"}'),
         prepare_test(
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
-            'n = f.connected("sophia")\n',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
+            'n = con.connected("sophia")\n',
             'RET["code_result"] = (n == {"nikola", "pilot"}, str(n))',
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
-            'f.connected("sophia")',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
+            'con.connected("sophia")',
             '{"nikola", "pilot"}'),
         prepare_test(
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
-            'n = f.connected("DDD")\n',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
+            'n = con.connected("DDD")\n',
             'RET["code_result"] = (n == set(), str(n))',
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
-            'f.connected("DDD")',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
+            'con.connected("DDD")',
             'set()'),
         prepare_test(
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
-            'f.add({"sophia", "stephen"})\n'
-            'f.remove({"sophia", "nikola"})\n'
-            'n = f.connected("sophia")\n',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
+            'con.add({"sophia", "stephen"})\n'
+            'con.remove({"sophia", "nikola"})\n'
+            'n = con.connected("sophia")\n',
             'RET["code_result"] = (n == {"stephen", "pilot"}, str(n))',
-            'f = Friends(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
-            'f.add({"sophia", "stephen"})\n'
-            'f.remove({"sophia", "nikola"})\n'
-            'f.connected("sophia")\n',
+            'con = Connected(({"nikola", "sophia"}, {"stephen", "robot"}, {"sophia", "pilot"}))\n'
+            'con.add({"sophia", "stephen"})\n'
+            'con.remove({"sophia", "nikola"})\n'
+            'con.connected("sophia")\n',
             '{"stephen", "pilot"}'),
 
 
